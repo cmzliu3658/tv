@@ -21,8 +21,8 @@ python-version: 3.x
 run: pip install selenium requests
 - name: Install Chrome WebDriver
 run: |
-LATEST_CHROMEDRIVER_VERSION=121.0.6167.184
-curl -sS -o chromedriver_linux64.zip "https://storage.googleapis.com/chrome-for-testing-public/121.0.6167.184/win64/chromedriver-win64.zip"
+LATEST_CHROMEDRIVER_VERSION=120.0.6099.109
+curl -sS -o chromedriver_linux64.zip "https://edgedl.me.gvt1.com/edgedl/chrome/chrome-for-testing/120.0.6099.109/linux64/chrome-headless-shell-linux64.zip"
 sudo unzip chromedriver_linux64.zip -d /usr/local/bin
 rm chromedriver_linux64.zip
 - name: Set chromedriver path
