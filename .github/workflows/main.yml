@@ -19,8 +19,8 @@ jobs:
         run: |
           LATEST_CHROMEDRIVER_VERSION=120.0.6099.109
           curl -sS -o chromedriver_linux64.zip "https://edgedl.me.gvt1.com/edgedl/chrome/chrome-for-testing/120.0.6099.109/linux64/chrome-headless-shell-linux64.zip"
-          chmod +x check_zip.sh
-          ./check_zip.sh
+          chmod +x ${{ github.workspace }}/check_zip.sh
+          ${{ github.workspace }}/check_zip.sh
           unzip -q chromedriver_linux64.zip -d /usr/local/bin
           rm chromedriver_linux64.zip
       - name: Set chromedriver path
