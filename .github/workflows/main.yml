@@ -19,7 +19,13 @@ jobs:
         run: |
           LATEST_CHROMEDRIVER_VERSION=120.0.6099.109
           curl -sS -o chromedriver_linux64.zip "https://edgedl.me.gvt1.com/edgedl/chrome/chrome-for-testing/120.0.6099.109/linux64/chrome-headless-shell-linux64.zip"
-          sudo unzip chromedriver_linux64.zip -d /usr/local/bin
+          # Check if the file is a valid zip file
+          unzip -t chromedriver_linux64.zip > /dev/null
+          if [ $? -ne 0 ]; then
+            rm chromedriver_linux64.zip
+            curl -sS -o chromedriver_linux64.zip "https://edgedl.me.gvt1.com/edgedl/chrome/chrome-for-testing/120.0.6099.109/linux64/chrome-headless-shell-linux64.zip"
+          fi
+          unzip -q chromedriver_linux64.zip -d /usr/local/bin
           rm chromedriver_linux64.zip
       - name: Set chromedriver path
         run: |
