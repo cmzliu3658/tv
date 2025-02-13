@@ -1,7 +1,7 @@
 name: IPTV All
 on:
   push:
-branches:
+    branches:
       - main
 jobs:
   build:
@@ -9,7 +9,7 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-          - name: Set up Python
+      - name: Set up Python
         uses: actions/setup-python@v2
         with:
           python-version: 3.x
@@ -32,5 +32,5 @@ jobs:
           git config --local user.email "365862988@qq.com"
           git config --local user.name "cmzliu3658"
           git add .
-          git commit *.txt -m "Add generated file"
+          git commit -m "Add generated file"
           git push -f
