@@ -26,7 +26,7 @@ jobs:
           pip install selenium requests
 
       - name: Download ChromeDriver
-        uses: sidneys/setup-chromedriver@v1
+        uses: s1monov/setup-chromedriver@v1
         with:
           version: '120.0.6099.109'
 
