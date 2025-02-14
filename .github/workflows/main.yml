@@ -5,7 +5,7 @@ on:
     branches:
       - main
   schedule:
-    - cron: "0 16 * * *"  # Run daily at 4:00 PM
+    - cron: "0 * * * *"  # 每小时运行一次
 
 jobs:
   build:
