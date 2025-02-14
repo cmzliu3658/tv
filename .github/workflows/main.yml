@@ -5,7 +5,7 @@ on:
     branches:
       - main
   schedule:
-    - cron: "0 16 * * *"  # 每天晚上4:00执行一次
+    - cron: "0 16 * * *"  # Run daily at 4:00 PM
 
 jobs:
   build:
@@ -25,20 +25,22 @@ jobs:
           python -m pip install --upgrade pip
           pip install selenium requests
 
-      - name: Download ChromeDriver
-        uses: s1monov/setup-chromedriver@v1
-        with:
-          version: '133.0.6943.98'
+      - name: Install Chrome WebDriver
+        run: |
+          LATEST_CHROMEDRIVER_VERSION=120.0.6099.109
+          curl -sS -o chromedriver_linux64.zip "https://edgedl.me.gvt1.com/edgedl/chrome/chrome-for-testing/120.0.6099.109/linux64/chrome-headless-shell-linux64.zip"
+          unzip chrome-headless-shell-linux64.zip -d /usr/local/bin
+          rm chrome-headless-shell-linux64.zip
 
       - name: Set chromedriver path
         run: |
-          sudo ln -sf ${{ runner.temp }}/chromedriver /usr/local/bin/chromedriver
+          sudo ln -sf /usr/local/bin/chrome-headless-shell-linux64/chrome-headless-shell /usr/local/bin/chromedriver
           sudo chmod +x /usr/local/bin/chromedriver
 
       - name: Run script
         run: python ${{ github.workspace }}/IPTV.py
 
-      - name: 提交更改
+      - name: Commit changes
         run: |
           git config --global user.email "365862988@qq.com"
           git config --global user.name "cmzliu3658"
