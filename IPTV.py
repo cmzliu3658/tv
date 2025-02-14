@@ -45,69 +45,66 @@ def process_url(url):
     pattern = r"http://\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}:\d+"  # 设置匹配的格式，如http://8.8.8.8:8888
     urls_all = re.findall(pattern, page_content)
     urls = list(set(urls_all))  # 去重得到唯一的URL列表
+    results = []
     for url in urls:
         print(url)
         # 遍历网址列表，获取JSON文件并解析
-        results = []
-        for url in urls:
-            try:
-                # 发送GET请求获取JSON文件，设置超时时间为5秒
-                json_url = f"{url}/iptv/live/1000.json?key=txiptv"
-                response = requests.get(json_url, timeout=3)
-                json_data = response.json()
+        try:
+            # 发送GET请求获取JSON文件，设置超时时间为5秒
+            json_url = f"{url}/iptv/live/1000.json?key=txiptv"
+            response = requests.get(json_url, timeout=3)
+            json_data = response.json()
 
-                # 解析JSON文件，获取name和url字段
-                for item in json_data['data']:
-                    if isinstance(item, dict):
-                        name = item.get('name')
-                        urlx = item.get('url')
-                        urld = f"{url}{urlx}"
+            # 解析JSON文件，获取name和url字段
+            for item in json_data['data']:
+                if isinstance(item, dict):
+                    name = item.get('name')
+                    urlx = item.get('url')
+                    urld = f"{url}{urlx}"
 
-                        if name and urlx:
-                            # 删除特定文字
-                            name = name.replace("中央", "CCTV")
-                            name = name.replace("高清", "")
-                            name = name.replace("HD", "")
-                            name = name.replace("标清", "")
-                            name = name.replace("频道", "")
-                            name = name.replace("-", "")
-                            name = name.replace(" ", "")
-                            name = name.replace("PLUS", "+")
-                            name = name.replace("(", "")
-                            name = name.replace(")", "")
-                            name = name.replace("CCTV1综合", "CCTV1")
-                            name = name.replace("CCTV2财经", "CCTV2")
-                            name = name.replace("CCTV3综艺", "CCTV3")
-                            name = name.replace("CCTV4国际", "CCTV4")
-                            name = name.replace("CCTV4中文国际", "CCTV4")
-                            name = name.replace("CCTV5体育", "CCTV5")
-                            name = name.replace("CCTV6电影", "CCTV6")
-                            name = name.replace("CCTV7军事", "CCTV7")
-                            name = name.replace("CCTV7军农", "CCTV7")
-                            name = name.replace("CCTV7国防军事", "CCTV7")
-                            name = name.replace("CCTV8电视剧", "CCTV8")
-                            name = name.replace("CCTV9记录", "CCTV9")
-                            name = name.replace("CCTV9纪录", "CCTV9")
-                            name = name.replace("CCTV10科教", "CCTV10")
-                            name = name.replace("CCTV11戏曲", "CCTV11")
-                            name = name.replace("CCTV12社会与法", "CCTV12")
-                            name = name.replace("CCTV13新闻", "CCTV13")
-                            name = name.replace("CCTV新闻", "CCTV13")
-                            name = name.replace("CCTV14少儿", "CCTV14")
-                            name = name.replace("CCTV15音乐", "CCTV15")
-                            name = name.replace("CCTV16奥林匹克", "CCTV16")
-                            name = name.replace("CCTV17农业农村", "CCTV17")
-                            name = name.replace("CCTV5+体育赛视", "CCTV5+")
-                            name = name.replace("CCTV5+体育赛事", "CCTV5+")
-                            results.append(f"{name},{urld}")
-            except requests.exceptions.RequestException as e:
-                print(f"Failed to process JSON for URL {json_url}. Error: {str(e)}")
-                continue
-            except json.JSONDecodeError as e:
-                print(f"Failed to parse JSON for URL {url}. Error: {str(e)}")
-                continue
+                    if name and urlx:
+                        # 删除特定文字
+                        name = name.replace("中央", "CCTV")
+                        name = name.replace("高清", "")
+                        name = name.replace("HD", "")
+                        name = name.replace("标清", "")
+                        name = name.replace("频道", "")
+                        name = name.replace("-", "")
+                        name = name.replace(" ", "")
+                        name = name.replace("PLUS", "+")
+                        name = name.replace("(", "")
+                        name = name.replace(")", "")
+                        name = name.replace("CCTV1综合", "CCTV1")
+                        name = name.replace("CCTV2财经", "CCTV2")
+                        name = name.replace("CCTV3综艺", "CCTV3")
+                        name = name.replace("CCTV4国际", "CCTV4")
+                        name = name.replace("CCTV4中文国际", "CCTV4")
+                        name = name.replace("CCTV5体育", "CCTV5")
+                        name = name.replace("CCTV6电影", "CCTV6")
+                        name = name.replace("CCTV7军事", "CCTV7")
+                        name = name.replace("CCTV7军农", "CCTV7")
+                        name = name.replace("CCTV7国防军事", "CCTV7")
+                        name = name.replace("CCTV8电视剧", "CCTV8")
+                        name = name.replace("CCTV9记录", "CCTV9")
+                        name = name.replace("CCTV9纪录", "CCTV9")
+                        name = name.replace("CCTV10科教", "CCTV10")
+                        name = name.replace("CCTV11戏曲", "CCTV11")
+                        name = name.replace("CCTV12社会与法", "CCTV12")
+                        name = name.replace("CCTV13新闻", "CCTV13")
+                        name = name.replace("CCTV新闻", "CCTV13")
+                        name = name.replace("CCTV14少儿", "CCTV14")
+                        name = name.replace("CCTV15音乐", "CCTV15")
+                        name = name.replace("CCTV16奥林匹克", "CCTV16")
+                        name = name.replace("CCTV17农业农村", "CCTV17")
+                        name = name.replace("CCTV5+体育赛视", "CCTV5+")
+                        name = name.replace("CCTV5+体育赛事", "CCTV5+")
+                        results.append(f"{name},{urld}")
+        except requests.exceptions.RequestException as e:
+            print(f"Failed to process JSON for URL {json_url}. Error: {str(e)}")
+        except json.JSONDecodeError as e:
+            print(f"Failed to parse JSON for URL {url}. Error: {str(e)}")
 
-        return results
+    return results
 
 def save_results(results, filename):
     # 将结果保存到文本文件
@@ -118,75 +115,75 @@ def save_results(results, filename):
 
 # 处理第1个URL
 results_hebei = process_url(hebei)
-save_results(results_hebei, "hebei.txt")
+save_results(results_hebei or [], "hebei.txt")  # 确保results_hebei不为None
 
 # 处理第2个URL
 results_beijing = process_url(beijing)
-save_results(results_beijing, "beijing.txt")
+save_results(results_beijing or [], "beijing.txt")  # 确保results_beijing不为None
 
 # 处理第3个URL
 results_guangdong = process_url(guangdong)
-save_results(results_guangdong, "guangdong.txt")
+save_results(results_guangdong or [], "guangdong.txt")  # 确保results_guangdong不为None
 
 # 处理第4个URL
 results_shanghai = process_url(shanghai)
-save_results(results_shanghai, "shanghai.txt")
+save_results(results_shanghai or [], "shanghai.txt")  # 确保results_shanghai不为None
 
 # 处理第5个URL
 results_tianjin = process_url(tianjin)
-save_results(results_tianjin, "tianjin.txt")
+save_results(results_tianjin or [], "tianjin.txt")  # 确保results_tianjin不为None
 
 # 处理第6个URL
 results_chongqing = process_url(chongqing)
-save_results(results_chongqing, "chongqing.txt")
+save_results(results_chongqing or [], "chongqing.txt")  # 确保results_chongqing不为None
 
 # 处理第7个URL
 results_shanxi = process_url(shanxi)
-save_results(results_shanxi, "shanxi.txt")
+save_results(results_shanxi or [], "shanxi.txt")  # 确保results_shanxi不为None
 
 # 处理第8个URL
 results_shaanxi = process_url(shaanxi)
-save_results(results_shaanxi, "shaanxi.txt")
+save_results(results_shaanxi or [], "shaanxi.txt")  # 确保results_shaanxi不为None
 
 # 处理第9个URL
 results_liaoning = process_url(liaoning)
-save_results(results_liaoning, "liaoning.txt")
+save_results(results_liaoning or [], "liaoning.txt")  # 确保results_liaoning不为None
 
 # 处理第10个URL
 results_jiangsu = process_url(jiangsu)
-save_results(results_jiangsu, "jiangsu.txt")
+save_results(results_jiangsu or [], "jiangsu.txt")  # 确保results_jiangsu不为None
 
 # 处理第11个URL
 results_zhejiang = process_url(zhejiang)
-save_results(results_zhejiang, "zhejiang.txt")
+save_results(results_zhejiang or [], "zhejiang.txt")  # 确保results_zhejiang不为None
 
 # 处理第12个URL
 results_anhui = process_url(anhui)
-save_results(results_anhui, "anhui.txt")
+save_results(results_anhui or [], "anhui.txt")  # 确保results_anhui不为None
 
 # 处理第13个URL
 results_fujian = process_url(fujian)
-save_results(results_fujian, "fujian.txt")
+save_results(results_fujian or [], "fujian.txt")  # 确保results_fujian不为None
 
 # 处理第14个URL
 results_jiangxi = process_url(jiangxi)
-save_results(results_jiangxi, "jiangxi.txt")
+save_results(results_jiangxi or [], "jiangxi.txt")  # 确保results_jiangxi不为None
 
 # 处理第15个URL
 results_shandong = process_url(shandong)
-save_results(results_shandong, "shandong.txt")
+save_results(results_shandong or [], "shandong.txt")  # 确保results_shandong不为None
 
 # 处理第16个URL
 results_henan = process_url(henan)
-save_results(results_henan, "henan.txt")
+save_results(results_henan or [], "henan.txt")  # 确保results_henan不为None
 
 # 处理第17个URL
 results_hubei = process_url(hubei)
-save_results(results_hubei, "hubei.txt")
+save_results(results_hubei or [], "hubei.txt")  # 确保results_hubei不为None
 
 # 处理第18个URL
 results_hunan = process_url(hunan)
-save_results(results_hunan, "hunan.txt")
+save_results(results_hunan or [], "hunan.txt")  # 确保results_hunan不为None
 
 # 合并文件内容
 file_contents = []
