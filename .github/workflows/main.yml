@@ -38,7 +38,7 @@ jobs:
           sudo chmod +x /usr/local/bin/chromedriver
 
       - name: Run script
-        run: python ${{ github.workspace }}/IPTV.py
+        run: python ${{ github.workspace }}/ZHGXTV.py
 
       - name: Commit changes
         run: |
